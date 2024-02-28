@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { motion } from "framer-motion";
 import style from "./Button.module.css";
 import Form from "../Form";
 
@@ -15,7 +16,13 @@ const Button = ({ createTask }: IProps) => {
 
   return (
     <section className={style.button}>
-      <input type="button" value="Criar Tarefa" onClick={showContainer} />
+      <motion.input
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.9 }}
+        type="button"
+        value="Criar Tarefa"
+        onClick={showContainer}
+      />
       {showForm && (
         <Form
           createTask={createTask}

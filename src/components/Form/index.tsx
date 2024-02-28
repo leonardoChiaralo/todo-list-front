@@ -1,4 +1,5 @@
 import { FormEvent, useState } from "react";
+import { motion } from "framer-motion";
 import style from "./Form.module.css";
 
 interface IProps {
@@ -46,10 +47,21 @@ const Form = ({ createTask, showForm, setShowForm }: IProps) => {
           placeholder="Descreva sua tarefa"
           required
         />
-        <button type="button" onClick={handleCancel}>
+        <motion.button
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
+          type="button"
+          onClick={handleCancel}
+        >
           Cancelar
-        </button>
-        <button type="submit">Salvar</button>
+        </motion.button>
+        <motion.button
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
+          type="submit"
+        >
+          Salvar
+        </motion.button>
       </form>
     </section>
   );

@@ -1,24 +1,19 @@
 import React, { useState } from "react";
+import { motion } from "framer-motion";
 import { ITask } from "../../interfaces/task";
 import style from "./Modal.module.css";
+import Backdrop from "../Backdrop";
 
 interface IProps {
   task: ITask;
-  showModal: boolean;
-  setShowModal: (boolean: boolean) => void;
+  handleClose: () => void;
   updateTask: (id: string, title: string, description: string) => Promise<void>;
 }
 
-const Modal = ({ task, showModal, setShowModal, updateTask }: IProps) => {
+const Modal = ({ task, handleClose, updateTask }: IProps) => {
   const [editing, setEditing] = useState(false);
   const [titleEdited, setTitleEdited] = useState(task.title);
   const [descriptionEdited, setDescriptionEdited] = useState(task.description);
-
-  const handleClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    if ((event.target as HTMLElement).classList.contains(style.background)) {
-      setShowModal(false);
-    }
-  };
 
   const handleEdit = () => {
     editing === true ? setEditing(false) : setEditing(true);
@@ -41,13 +36,37 @@ const Modal = ({ task, showModal, setShowModal, updateTask }: IProps) => {
 
   const status = task.isCompleted ? "Completa" : "A Fazer";
 
+  const dropIn = {
+    hidden: {
+      y: "-100vh",
+      opacity: 0,
+    },
+    visible: {
+      y: "0",
+      opacity: 1,
+      transition: {
+        duration: 0.1,
+        type: "spring",
+        damping: 25,
+        stiffness: 500,
+      },
+    },
+    exit: {
+      y: "100vh",
+      opacity: 0,
+    },
+  };
+
   return (
-    <div
-      className={style.background}
-      onClick={handleClick}
-      style={{ display: showModal ? "block" : "none" }}
-    >
-      <section className={style.modal}>
+    <Backdrop onClick={handleClose}>
+      <motion.div
+        className={style.modal}
+        onClick={event => event.stopPropagation()}
+        variants={dropIn}
+        initial="hidden"
+        animate="visible"
+        exit="exit"
+      >
         <div className={style.titleContainer}>
           {editing ? (
             <input
@@ -60,7 +79,13 @@ const Modal = ({ task, showModal, setShowModal, updateTask }: IProps) => {
           ) : (
             <h2 className={style.title}>{titleEdited}</h2>
           )}
-          <button onClick={handleEdit}>Editar</button>
+          <motion.button
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+            onClick={handleEdit}
+          >
+            Editar
+          </motion.button>
         </div>
         <div className={style.descriptionContainer}>
           <p className={style.status}>{status}</p>
@@ -77,14 +102,19 @@ const Modal = ({ task, showModal, setShowModal, updateTask }: IProps) => {
           )}
         </div>
         {editing ? (
-          <button className={style.saveButton} onClick={handleSave}>
+          <motion.button
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+            className={style.saveButton}
+            onClick={handleSave}
+          >
             Salvar
-          </button>
+          </motion.button>
         ) : (
           ""
         )}
-      </section>
-    </div>
+      </motion.div>
+    </Backdrop>
   );
 };
 
