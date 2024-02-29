@@ -4,6 +4,7 @@
   border-radius: 10px;
   border-style: dashed;
   border-color: rgba(0, 0, 0, 0.2);
+  margin-bottom: 25px;
 }
 
 .button input {

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import style from "./Button.module.css";
 import Form from "../Form";
 
@@ -15,22 +15,29 @@ const Button = ({ createTask }: IProps) => {
   };
 
   return (
-    <section className={style.button}>
-      <motion.input
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.9 }}
-        type="button"
-        value="Criar Tarefa"
-        onClick={showContainer}
-      />
-      {showForm && (
-        <Form
-          createTask={createTask}
-          showForm={showForm}
-          setShowForm={setShowForm}
-        />
-      )}
-    </section>
+    <div>
+      <section className={style.button}>
+        <a href="#form">
+          <motion.input
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+            type="button"
+            value="Criar Tarefa"
+            onClick={showContainer}
+          />
+          <AnimatePresence>
+            {showForm && (
+              <Form
+                id="form"
+                createTask={createTask}
+                showForm={showForm}
+                setShowForm={setShowForm}
+              />
+            )}
+          </AnimatePresence>
+        </a>
+      </section>
+    </div>
   );
 };
 

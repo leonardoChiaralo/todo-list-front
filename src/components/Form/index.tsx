@@ -6,9 +6,10 @@ interface IProps {
   createTask: (title: string, description: string) => void;
   showForm: boolean;
   setShowForm: (boolean: boolean) => void;
+  id: string;
 }
 
-const Form = ({ createTask, showForm, setShowForm }: IProps) => {
+const Form = ({ createTask, showForm, setShowForm, id }: IProps) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
 
@@ -26,12 +27,17 @@ const Form = ({ createTask, showForm, setShowForm }: IProps) => {
   };
 
   return (
-    <section
+    <motion.section
+      initial={{ opacity: 0, y: -20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: 10 }}
+      transition={{ duration: 0.1 }}
       className={style.form}
       style={{ display: showForm ? "block" : "none" }}
     >
       <form onSubmit={handleSubmit}>
         <input
+          id={id}
           autoFocus
           type="text"
           value={title}
@@ -63,7 +69,7 @@ const Form = ({ createTask, showForm, setShowForm }: IProps) => {
           Salvar
         </motion.button>
       </form>
-    </section>
+    </motion.section>
   );
 };
 
