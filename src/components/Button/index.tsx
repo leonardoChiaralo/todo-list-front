@@ -28,7 +28,6 @@ const Button = ({ createTask }: IProps) => {
           <AnimatePresence>
             {showForm && (
               <Form
-                id="form"
                 createTask={createTask}
                 showForm={showForm}
                 setShowForm={setShowForm}

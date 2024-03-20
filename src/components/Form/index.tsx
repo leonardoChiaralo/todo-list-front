@@ -6,10 +6,9 @@ interface IProps {
   createTask: (title: string, description: string) => void;
   showForm: boolean;
   setShowForm: (boolean: boolean) => void;
-  id: string;
 }
 
-const Form = ({ createTask, showForm, setShowForm, id }: IProps) => {
+const Form = ({ createTask, showForm, setShowForm }: IProps) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
 
@@ -37,7 +36,6 @@ const Form = ({ createTask, showForm, setShowForm, id }: IProps) => {
     >
       <form onSubmit={handleSubmit}>
         <input
-          id={id}
           autoFocus
           type="text"
           value={title}
